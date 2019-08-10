@@ -1,3 +1,3 @@
-function main() {
-    return { message: "Hello Serverless world!" };
+function main(params) {
+    return { message: "Hola, " + params.name + " desde " + params.place };
 }
