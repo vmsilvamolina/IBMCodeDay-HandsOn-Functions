@@ -23,12 +23,6 @@
 `(ibmcloud fn action invoke helloWorld --blocking | Select-String -Pattern '(?:"message": ")(.*)("$)').Matches.Groups[1].Value`
 
 
-
-`curl -X POST -H 'Content-type: application/json' --data '{"text":"Hola desde cURL!"}' https://hoo.slack.com/services/TBK11E5UM/BM9NCTQ5D/MQnMXPiPvb5XPpmZhS5pr8Mp`
-
-`ibmcloud fn action invoke /whisk.system/slack/post --param url https://hooks.slack.com/services/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 --param channel '#vmsilvamolina' --param text "Hola desde IBM Cloud Functions!"`
-
-
 ## Extra: Utilities
 
 * IBM Cloud Functions ofrece por defecto algunas utilidades empaquetadas, como por ejemplo, utilizar **echo** para imprimir un mensaje. Para invocar esta acción, simplemente será necesario ejecutar la siguiente línea de código:
@@ -36,10 +30,27 @@
 `ibmcloud fn action invoke whisk.system/utils/echo -p message "Hola!" --result`
 
 
-* Secuencia?
+* Adicional a lo anterior, también es posible combinar acciones dentro de una secuencia. La secuencia se tiene que definir en un orden lógico según el requerimiento.Por ejemplo, se puede utilizar **split** y **sort** para convertir una línea de texto en un array ordenado.
+
+`ibmcloud fn action create sequenceAction --sequence /whisk.system/utils/split,/whisk.system/utils/sort`
+
+`ibmcloud fn action invoke --result sequenceAction --param payload "Esto va al medio\nÚltima parte\nAl principio"`
+
+En la salida, debería verse algo como ésto:
+
+```
+{
+    "length": 3,
+    "lines": [
+        "Al principio",
+        "Esto va al medio",
+        "Última parte"
+    ]
+}
+```
 
 * Para listar todas las utilidades:
 
 `ibmcloud fn package get --summary /whisk.system/utils`
 
-
+Donde también se despliega el o los parámetros disponibles.
