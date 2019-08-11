@@ -54,3 +54,7 @@ En la salida, debería verse algo como ésto:
 `ibmcloud fn package get --summary /whisk.system/utils`
 
 Donde también se despliega el o los parámetros disponibles.
+
+## Próximo paso
+
+2. [Slack](https://github.com/vmsilvamolina/IBMCodeDay-HandsOn-Functions/blob/master/2_Slack/Slack.md)
